@@ -41,7 +41,7 @@ public class WorldCountLocal {
          * SparkContext   中用于根据文件  类型的输入源创建RDD 的方法，叫做textFile()
          * 在我们这里呢  RDD  中  有元素这种概念    如果是   hdfs  或者本地文件呢   创建RDD 每一个文件就相当于文件里面的一行
          */
-        JavaRDD<String>  lines=sc.textFile("C:\\Users\\qzhou34\\Desktop\\data\\world-count.txt");
+        JavaRDD<String>  lines=sc.textFile("C:\\Users\\haha174\\Desktop\\data\\world-count.txt");
         // 第四步：对初始RDD进行transformation操作，也就是一些计算操作
         // 通常操作会通过创建function，并配合RDD的map、flatMap等算子来执行
         // function，通常，如果比较简单，则创建指定Function的匿名内部类
