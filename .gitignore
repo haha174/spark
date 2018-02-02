@@ -4,3 +4,4 @@
 /spark-world-count-java/.idea
 /spark-world-count-java/target
 /spark-world-count-java/*.iml
+/out
