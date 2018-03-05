@@ -11,6 +11,22 @@
 <modules>
     <module>spark-world-count-java</module>
     <module>spark-scala-submit-world-count</module>
+    <module>spark-java-line-count</module>
+    <module>spark-scala-line-count</module>
+    <module>spark-scala-num-double</module>
+    <module>spark-java-num-double</module>
+    <module>spark-java-num-filter</module>
+    <module>spark-num-scala-filter</module>
+    <module>spark-java-str-flitermap</module>
+    <module>spark-scala-str-flitermap</module>
+    <module>spark.java.str.group</module>
+    <module>spark-scala-str-group</module>
+    <module>spark-java-str-reduce</module>
+    <module>spark-scala-str-reduce</module>
+    <module>spark-java-str-sort</module>
+    <module>spark-scala-str-sort</module>
+    <module>spark-join-cogroup-java</module>
+    <module>spark-join-cogroup-scala</module>
 </modules>
 
 </project>
