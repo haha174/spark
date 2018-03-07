@@ -27,6 +27,8 @@
     <module>spark-scala-str-sort</module>
     <module>spark-join-cogroup-java</module>
     <module>spark-join-cogroup-scala</module>
+    <module>spart-java-action-operation</module>
+    <module>spark-scala-action-operation</module>
 </modules>
 
 </project>
