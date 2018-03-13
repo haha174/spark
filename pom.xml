@@ -29,6 +29,9 @@
     <module>spark-join-cogroup-scala</module>
     <module>spart-java-action-operation</module>
     <module>spark-scala-action-operation</module>
+    <module>spark-rdd-persist-java</module>
+    <module>spark-broatcast-variable-java</module>
+    <module>spark-broatcast-viriable-scala</module>
 </modules>
 
 </project>
