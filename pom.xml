@@ -9,15 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 <modules>
-    <module>spark-world-count-java-submit</module>
-    <module>spark-scala-submit-world-count</module>
     <module>spark-java-line-action</module>
     <module>spark-scala-line-action</module>
-
-    <module>spart-java-action-operation</module>
-    <module>spark-scala-action-operation</module>
-    <module>spark-broatcast-variable-java</module>
-    <module>spark-broatcast-viriable-scala</module>
 </modules>
 
 </project>
