@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spark-scala-line-count</artifactId>
+    <artifactId>spark-study-sql-scala</artifactId>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spark.version>2.2.1</spark.version>
@@ -53,6 +54,11 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming-kafka_2.11</artifactId>
             <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.46</version>
         </dependency>
     </dependencies>
 
@@ -107,6 +113,7 @@
 
         </plugins>
     </build>
+
 
 
 </project>

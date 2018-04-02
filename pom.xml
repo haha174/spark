@@ -11,6 +11,8 @@
 <modules>
     <module>spark-java-line-action</module>
     <module>spark-scala-line-action</module>
+    <module>spark-study-sql-java</module>
+    <module>spark-study-sql-scala</module>
 </modules>
 
 </project>
