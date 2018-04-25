@@ -15,13 +15,14 @@ object RDDToDataSetProgrammatically {
     val conf = new SparkConf().setMaster("local").setAppName("RDDToDataSetReflection")
     val sc = new JavaSparkContext(conf)
     val sqlContext = new SQLContext(sc)
+    import sqlContext.implicits. _
     val listRDD = sc.textFile("C:\\Users\\wchen129\\Desktop\\data\\sparkdata\\students.txt")
     //第一步创建RDD  但是需要转换成RDD<Row>
     val rowRDD = listRDD.map(new Function[String, Row]() {
       @throws[Exception]
       override def call(s: String): Row = {
         val string = s.split(",")
-        RowFactory.create(string(0).toInt, string(1), string(2).toInt)
+        Row(Integer.parseInt(string(0)), string(1),Integer.parseInt( string(2)))
       }
     })
     //动态构建元数据

@@ -12,5 +12,6 @@ object DataFrameStudy {
      val reader = sqlContext.read
       val ds = reader.json("hdfs://hadoop:8020/data/students.json")
       ds.show()
+
   }
 }

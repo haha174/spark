@@ -2,6 +2,7 @@ package com.wen.spark.sql.core
 
 import java.util
 
+import com.alibaba.fastjson.JSONObject
 import com.wen.spark.sql.core.bean.Student
 import org.apache.spark.SparkConf
 import org.apache.spark.api.java.{JavaRDD, JavaSparkContext}
@@ -14,15 +15,18 @@ object  RDDToDataSetReflection {
     val sc = new JavaSparkContext(conf)
     val sqlContext = new SQLContext(sc)
 
-    val listRDD = sc.textFile("C:\\Users\\wchen129\\Desktop\\data\\sparkdata\\students.txt")
+    val listRDD = sc.textFile("C:\\Users\\wchen129\\Desktop\\data\\sparkdata\\students.json")
     val listStudent = listRDD.map(new Function[String, Student]() {
       @throws[Exception]
       override def call(s: String): Student = {
-        var string=s.split(",")
-        var student=new Student;
-        student.setId(Integer.valueOf(string(0).trim()))
-        student.setAge(Integer.valueOf(string(2).trim()))
-        student.setName(string(1))
+
+        val student = com.alibaba.fastjson.JSON.parseObject(s, classOf[Student])
+
+//        var string=s.split(",")
+//        var student=new Student;
+//        student.setId(Integer.valueOf(string(0).trim()))
+//        student.setAge(Integer.valueOf(string(2).trim()))
+//        student.setName(string(1))
         student
       }
     })
