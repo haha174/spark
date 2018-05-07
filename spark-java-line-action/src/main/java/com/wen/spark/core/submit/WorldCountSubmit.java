@@ -1,5 +1,6 @@
 package com.wen.spark.core.submit;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -24,20 +25,27 @@ public class WorldCountSubmit {
          * 第一删除setMaster
          * 第二  hadf  上面的文件
          */
-        SparkConf conf=new SparkConf().setAppName("WorldCountLocal");
+
+
+//        configuration.set("dfs.client.use.datanode.hostname","true");
+
+
+        SparkConf conf=new SparkConf().setAppName("WorldCountLocal").setMaster("local");
         /**
          *
          * 1  将world-count.txt  上传到hdfs
          * 2  maven 打包
          * 3 编写提交脚本
          */
+        System.setProperty("dfs.client.use.datanode.hostname", "true");
+
         JavaSparkContext sc=new JavaSparkContext(conf);
 
-        JavaRDD<String>  lines=sc.textFile("hdfs://spark1:8020/world-count.txt");
+        JavaRDD<String>  lines=sc.textFile("hdfs://cloud.codeguoj.cn:8020/world-count.txt");
 
         JavaRDD<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
             public Iterator<String> call(String s) throws Exception {
-                return Arrays.asList(s.split("-")) .iterator();
+                return Arrays.asList(s.split(" ")) .iterator();
             }
         });
 

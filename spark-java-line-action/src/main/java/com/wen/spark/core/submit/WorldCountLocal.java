@@ -4,14 +4,13 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.FlatMapFunction;
-import org.apache.spark.api.java.function.Function2;
-import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.api.java.function.VoidFunction;
+import org.apache.spark.api.java.function.*;
 import scala.Tuple2;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class WorldCountLocal {
     public static void main(String[] args){
@@ -31,6 +30,8 @@ public class WorldCountLocal {
          * 如果开发Spark  Streaming   程序  那么就是它独有的SparkContext
          * 以此类推
          */
+
+
         JavaSparkContext sc=new JavaSparkContext(conf);
         /**
          * 第三步： 要针对输入源（hdfs文件,本地文件,等等）创建一个初始的RDD
@@ -39,7 +40,7 @@ public class WorldCountLocal {
          * SparkContext   中用于根据文件  类型的输入源创建RDD 的方法，叫做textFile()
          * 在我们这里呢  RDD  中  有元素这种概念    如果是   hdfs  或者本地文件呢   创建RDD 每一个文件就相当于文件里面的一行
          */
-        JavaRDD<String>  lines=sc.textFile("C:\\Users\\haha174\\Desktop\\data\\world-count.txt");
+        JavaRDD<String>  lines=sc.textFile("C:\\Users\\wchen129\\Desktop\\data\\sparkdata\\world-count.txt");
         // 第四步：对初始RDD进行transformation操作，也就是一些计算操作
         // 通常操作会通过创建function，并配合RDD的map、flatMap等算子来执行
         // function，通常，如果比较简单，则创建指定Function的匿名内部类
@@ -53,6 +54,10 @@ public class WorldCountLocal {
                 return Arrays.asList(s.split("-")) .iterator();
             }
         });
+
+
+
+
         // 接着，需要将每一个单词，映射为(单词, 1)的这种格式
         // 因为只有这样，后面才能根据单词作为key，来进行每个单词的出现次数的累加
         // mapToPair，其实就是将每个元素，映射为一个(v1,v2)这样的Tuple2类型的元素
@@ -99,4 +104,5 @@ public class WorldCountLocal {
         });
         sc.close();
     }
+
 }

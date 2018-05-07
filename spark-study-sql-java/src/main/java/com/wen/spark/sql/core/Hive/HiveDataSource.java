@@ -16,17 +16,15 @@ public class HiveDataSource {
         //第一个功能，使用HiveContext的Sql()/Hql
         sqlContext.sql("DROP TABLE IF EXISTS student_info");
 
-       sqlContext.sql("CREATE  TABLE IF NOT EXISTS student_info (name STRING ,age INT)");
+        sqlContext.sql("CREATE  TABLE IF NOT EXISTS student_info (name STRING ,age INT)");
+
         System.out.println("============================create table success");
         //将学生的基本信息导入到StudentInfo  表
         sqlContext.sql("LOAD DATA LOCAL INPATH '/data/hive/student_info/student_info.txt' INTO TABLE  student_info");
 
-
-
-
         sqlContext.sql("DROP TABLE IF EXISTS student_scores");
 
-       sqlContext.sql("CREATE  TABLE IF NOT EXISTS student_scores (name STRING ,score INT)");
+        sqlContext.sql("CREATE  TABLE IF NOT EXISTS student_scores (name STRING ,score INT)");
         //将学生的基本分数导入到StudentInfo  表
         sqlContext.sql("LOAD DATA LOCAL INPATH '/data/hive/student_info/student_scores.txt' INTO TABLE  student_scores");
         //第二个功能接着将sql  返回的DataFrame  用于查询
