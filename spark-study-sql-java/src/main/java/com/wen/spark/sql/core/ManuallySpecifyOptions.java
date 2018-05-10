@@ -8,13 +8,13 @@ import org.apache.spark.sql.SQLContext;
 
 public class ManuallySpecifyOptions {
     public static void main(String[] args) {
-        SparkConf conf=new SparkConf().setAppName("DataFrameStudy").setMaster("local");
+        SparkConf conf=new SparkConf().setAppName("DataFrameStudy");
         JavaSparkContext sc=new JavaSparkContext(conf);
         SQLContext sqlContext=new SQLContext(sc);
         DataFrameReader reader=sqlContext.read();
-        Dataset ds= reader.format("json").load("C:\\Users\\wchen129\\Desktop\\data\\sparkdata\\students.json");
+        Dataset ds= reader.format("json").load("C:\\Users\\haha174\\Desktop\\data\\sparkdata\\students.json");
         ds.show();
-        ds.write().save("C:\\Users\\wchen129\\Desktop\\data\\sparkdata\\students.parquet");
+        ds.write().save("C:\\Users\\haha174\\Desktop\\data\\sparkdata\\students.parquet");
         sc.close();
     }
 }

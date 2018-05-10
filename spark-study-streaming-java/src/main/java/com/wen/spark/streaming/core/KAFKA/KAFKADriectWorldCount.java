@@ -17,7 +17,7 @@ public class KAFKADriectWorldCount {
         SparkConf conf=new SparkConf().setMaster("local[2]").setAppName("KAFKAWorldCount");
         JavaStreamingContext jssc=new JavaStreamingContext(conf, Durations.seconds(5));
         Map<String,String> map=new HashMap<>();
-        map.put("metadata.broker.list","cloud.codeguoj.cn:9092");
+        map.put("metadata.broker.list","www.codeguoj.cn:9092");
         Set<String> toPics=new HashSet<>();
         toPics.add("worldCount");
         JavaPairInputDStream<String,String> lines= KafkaUtils.createDirectStream(jssc,

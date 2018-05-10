@@ -7,14 +7,11 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.api.java.function.VoidFunction;
-import org.apache.spark.sql.RowFactory;
-import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.*;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import scala.Tuple2;
-import org.apache.spark.sql.Row;
 
 import java.sql.*;
 import java.util.*;
@@ -22,19 +19,19 @@ import java.util.*;
 
 public class JdbcDataSource {
     public static void main(String[] args) {
-        SparkConf conf=new SparkConf().setAppName("JdbcDataSource");
+        SparkConf conf=new SparkConf().setAppName("JdbcDataSource").setMaster("local");
         JavaSparkContext sc=new JavaSparkContext(conf);
         SQLContext sqlContext=new SQLContext(sc);
         //在两张表中分别取出  转换为  Dataset
         Map<String,String> options=new HashMap<String,String>();
-        options.put("url","jdbc:mysql://haha174:3306/test");
+        options.put("url","jdbc:mysql://www.haha174.top:3306/test");
         options.put("dbtable","students_infos");
         options.put("driver", "com.mysql.jdbc.Driver");
         options.put("user","root");
         options.put("password","root");
         Dataset studentsDS=sqlContext.read().format("jdbc").options(options).load();
         options.clear();
-        options.put("url","jdbc:mysql://haha174:3306/test");
+        options.put("url","jdbc:mysql://www.haha174.top:3306/test");
         options.put("dbtable","students_scores");
         options.put("driver", "com.mysql.jdbc.Driver");
         options.put("user","root");
@@ -47,13 +44,16 @@ public class JdbcDataSource {
             public Tuple2<String,Integer> call(Row row) throws Exception {
                 return new Tuple2<String, Integer>(row.getString(1),row.getInt(2));
             }
-        }).join(scoreDS.javaRDD().mapToPair(new PairFunction<Row ,String,Integer>() {
-            private static final long serialVersionUID=1L;
+        }).join(
+                scoreDS.javaRDD().mapToPair(new PairFunction<Row ,String,Integer>() {
+                    private static final long serialVersionUID=1L;
 
-            public Tuple2<String,Integer> call(Row row) throws Exception {
-                return new Tuple2<String, Integer>(row.getString(1),row.getInt(2));
-            }
-        }));
+                    public Tuple2<String,Integer> call(Row row) throws Exception {
+                        return new Tuple2<String, Integer>(row.getString(1),row.getInt(2));
+                    }
+                }
+            )
+        );
 
         //将JavaRDD  转换为JavaRDD<Row>
         JavaRDD<Row> StudentRowRDD=studentRDD.map(new Function<Tuple2<String, Tuple2<Integer, Integer>>, Row>() {
@@ -79,43 +79,43 @@ public class JdbcDataSource {
         StructType structType=DataTypes.createStructType(structFieldList);
         Dataset studentRe=sqlContext.createDataFrame(StudentRowRDDS,structType);
         options.clear();
-        options.put("url","jdbc:mysql://haha174:3306/test");
+        options.put("url","jdbc:mysql://www.haha174.top:3306/test");
         options.put("dbtable","good_students_infos");
         options.put("driver", "com.mysql.jdbc.Driver");
         options.put("user","root");
         options.put("password","root");
-   //     studentRe.write().format("jdbc").options(options).save();
+        studentRe.write().format("jdbc").options(options).mode(SaveMode.Append).save();
         System.out.println("       ==================="+StudentRowRDDS.count());
 
-        StudentRowRDDS.foreach(new VoidFunction<Row>() {
-            private static final long serialVersionUID=1L;
-            @Override
-            public void call(Row o) throws Exception {
-
-                Connection connection=null;
-                Statement statement=null;
-                try {
-                    Class.forName("com.mysql.jdbc.driver");
-                    connection= DriverManager.getConnection("jdbc:mysql://haha174:3306/test","root","root");
-                    String sql="INSERT IN good_students_infos(name,age,score)values("+o.getString(0)+","+o.getInt(1)+","+o.getInt(2)+")";
-                    System.out.println(sql);
-                    statement=connection.createStatement();
-                    statement.executeUpdate(sql);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                catch (SQLException e ){
-                    e.printStackTrace();
-                }finally {
-                    if(connection!=null){
-                        connection.close();
-                    }
-                    if(statement!=null){
-                        statement.close();
-                    }
-                }
-
-            }
-        });
+//        StudentRowRDDS.foreach(new VoidFunction<Row>() {
+//            private static final long serialVersionUID=1L;
+//            @Override
+//            public void call(Row o) throws Exception {
+//
+//                Connection connection=null;
+//                Statement statement=null;
+//                try {
+//                    Class.forName("com.mysql.jdbc.Driver");
+//                    connection= DriverManager.getConnection("jdbc:mysql://www.haha174.top:3306/test","root","root");
+//                    String sql="INSERT INTO good_students_infos(name,age,score)values('"+o.getString(0)+"',"+o.getInt(1)+","+o.getInt(2)+")";
+//                    System.out.println(sql);
+//                    statement=connection.createStatement();
+//                    statement.executeUpdate(sql);
+//                } catch (ClassNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                catch (SQLException e ){
+//                    e.printStackTrace();
+//                }finally {
+//                    if(connection!=null){
+//                        connection.close();
+//                    }
+//                    if(statement!=null){
+//                        statement.close();
+//                    }
+//                }
+//
+//            }
+//        });
     }
 }

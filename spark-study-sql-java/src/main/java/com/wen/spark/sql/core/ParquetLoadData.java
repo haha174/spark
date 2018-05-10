@@ -11,11 +11,13 @@ import org.apache.spark.sql.Row;
 
 public class ParquetLoadData {
     public static void main(String[] args) {
-        SparkConf conf=new SparkConf().setAppName("ParquetLoadData");
+        SparkConf conf=new SparkConf().setAppName("ParquetLoadData").setMaster("local");
         JavaSparkContext sc=new JavaSparkContext(conf);
+        System.setProperty("HADOOP_USER_NAME", "root");
+        sc.hadoopConfiguration().set("dfs.client.use.datanode.hostname","true");
         SQLContext sqlContext=new SQLContext(sc);
         DataFrameReader reader=sqlContext.read();
-        Dataset ds= reader.json("hdfs://hadoop:8020/data/users.parquet");
+        Dataset ds= reader.load("hdfs://cloud.codeguoj.cn:8020/test/parquet/");
         ds.show();
         ds.registerTempTable("users");
         Dataset userName=sqlContext.sql("select name from users");

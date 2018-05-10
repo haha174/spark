@@ -48,17 +48,17 @@ public class JoinAndCogroup {
                 }
         );
 
-/*
-        JavaPairRDD<Integer,Tuple2<Iterable<String>,Iterable<Integer>>> studengScore=studentRDD.cogroup(scoreRDD);
+
+        JavaPairRDD<Integer,Tuple2<Iterable<String>,Iterable<Integer>>> studengScore1=studentRDD.cogroup(scoreRDD);
         //  一个key  join  上的所有value  都放到一个Iterable
-        studengScore.foreach(new VoidFunction<Tuple2<Integer, Tuple2<Iterable<String>, Iterable<Integer>>>>() {
+        studengScore1.foreach(new VoidFunction<Tuple2<Integer, Tuple2<Iterable<String>, Iterable<Integer>>>>() {
             @Override
             public void call(Tuple2<Integer, Tuple2<Iterable<String>, Iterable<Integer>>> integerTuple2Tuple2) throws Exception {
                 System.out.print("id="+integerTuple2Tuple2._1);
                 System.out.print("name="+integerTuple2Tuple2._2()._1);
                 System.out.println("score="+integerTuple2Tuple2._2()._2);
             }
-        });*/
+        });
 
         sc.close();
     }

@@ -25,7 +25,7 @@ public class KAFKAWorldCount {
         JavaStreamingContext jssc=new JavaStreamingContext(conf, Durations.seconds(5));
         Map<String,Integer> map=new HashMap<>();
         map.put("worldCount",1);
-        JavaPairReceiverInputDStream<String,String> lines= KafkaUtils.createStream(jssc,"cloud.codeguoj.cn:2181","DefaultConsumerGroup",map);
+        JavaPairReceiverInputDStream<String,String> lines= KafkaUtils.createStream(jssc,"www.codeguoj.cn:2181","DefaultConsumerGroup",map);
         JavaDStream<String> worlds=lines.flatMap(new FlatMapFunction<Tuple2<String, String>, String>() {
             @Override
             public Iterator<String> call(Tuple2<String, String> stringStringTuple2) throws Exception {

@@ -39,7 +39,12 @@ public class WorldCountSubmit {
          */
         System.setProperty("dfs.client.use.datanode.hostname", "true");
 
+
         JavaSparkContext sc=new JavaSparkContext(conf);
+
+        Configuration configuration=sc.hadoopConfiguration();
+
+        configuration.set("dfs.client.use.datanode.hostname","true");
 
         JavaRDD<String>  lines=sc.textFile("hdfs://cloud.codeguoj.cn:8020/world-count.txt");
 

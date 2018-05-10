@@ -21,7 +21,6 @@ public class FilterNumber {
          * 过滤其中的偶数
          * filter 算子 传入的也是function  但是和map  有区别的是返回的类型是boolean  类型
          * 每一个初始RDD 元素都会传入call  判断逻辑自己编写  如果想保留返回true  不想保留返回false
-         *
          */
         JavaRDD<Integer> filterRDD=numberRDD.filter(new Function<Integer, Boolean>() {
             public Boolean call(Integer integer) throws Exception {
